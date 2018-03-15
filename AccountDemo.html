@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/lib/jquery-3.3.1.js"></script>
+    <script src="js/lib/knockout-3.2.0.js"></script>
+    <script>
+      $(document).ready(function(){
+        $("#btnShowDetails").click(function(){
+          alert(accViewModel.Id + " " + accViewModel.Balance())
+        })
+        $("#btnDeposit").click(function(){
+          accViewModel.Balance(accViewModel.Balance()+Number($("#txtAmount").val()));
+        })
+        $("#btnAddAccount").click(function(){
+          var acc = new Account($("#txtNewId").val(),$("#txtNewName").val(),$("#txtNewBalance").val())
+            accViewModel.Accounts.push(acc)
+            alert(accViewModel.Accounts().length)
+        })
+        $("#btnPopAccount").click(function(){
+          accViewModel.Accounts.pop();
+        })
+
+        $("#ddlAccounts").change(function(){
+            var selInd = document.getElementById("ddlAccounts").selectedIndex;
+            accViewModel.SelectedAccountIndex(selInd);
+
+        })
+
+      })
+    </script>
+    <title></title>
+  </head>
+  <body>
+    Account Id's:
+    <select id="ddlAccounts" data-bind="options:Accounts,optionsText:'Name',optionsValue:'Id'"></select>
+    Total Number of Accounts: <span data-bind="text:Accounts().length"></span><br/>
+    Total Balance in all Accounts: <span data-bind="text:TotalBalance"></span>
+    <hr/>
+    <h3>Selected Account Details</h3>
+    Id: <span data-bind="text:Accounts()[SelectedAccountIndex()].Id"></span><br/>
+    Name: <span data-bind="text:Accounts()[SelectedAccountIndex()].Name"></span><br/>
+    Balance: <span data-bind="text:Accounts()[SelectedAccountIndex()].Balance"></span><br/>
+    <input type="button" id="btnShowDetails" value="ShowDetails" />
+    
+    <!--
+    <hr/>
+    Amount: <input type="text" id="txtAmount"/>
+    <input type ="button" id="btnDeposit" value="Deposit"/>
+
+    <hr />
+    New Balance: <input type="text" data-bind="value:Balance"/>
+    -->
+
+  <hr/>
+    New Id: <input type="text" id="txtNewId" value=""/></br>
+    New Name: <input type="text" id="txtNewName" value=""/></br>
+    New Balance: <input type="text" id="txtNewBalance" value=""/></br>
+    <input type="button" id="btnAddAccount" value="Add Account"/>
+    <input type="button" id="btnPopAccount" value="Pop Account"/>
+
+    <script>
+          //This is model object
+          function Account(id, name, balance)
+          {
+            this.Id = id;
+            this.Name = name;
+            this.Balance = balance;
+          }
+
+          // this is View Model
+          function AccountViewModel(acc)
+          {
+            
+            current = this;
+            //this.Id = acc.id;
+            //this.Name = acc.name;
+            //this.Balance = ko.observable(acc.Balance);
+            var a1 = new Account(1, "A1", 1000)
+            var a2 = new Account(2, "A2", 2000)
+            var a3 = new Account(3, "A3", 3000)
+            this.Accounts = ko.observableArray([a1,a2,a3])
+            this.SelectedAccountIndex = ko.observable(0)
+            // this.TotalBalance = ko.computed(function(){
+            //   var total = 0;
+            //   for(var i = 0; i < this.Accounts().length; i++){
+            //     total += Number(this.Accounts()[i].Balance);
+            //   }
+            //   return total;
+            // },this)
+           this.TotalBalance = ko.computed(function(){
+              var total = 0;
+              for(var i = 0; i < current.Accounts().length; i++){
+                total += Number(current.Accounts()[i].Balance);
+              }
+              return total;
+            })
+          }
+
+          var acc = new Account(1, "A1", 10000);
+          var accViewModel = new AccountViewModel(acc);
+          ko.applyBindings(accViewModel);
+      </script>
+    
+    <script src="js/app.js"></script>
+  </body>
+</html>
+<!-- selectedIndexandAccount 4 19:14-->

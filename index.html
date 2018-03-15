@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+     <script src="js/lib/knockout-3.2.0.js"></script>
+
+	<title>Martial Arts in Your Area</title>
+</head>
+<body>
+	<div class="bluelink"><hr>Wushu Town - Martial Art School City</hr></div>
+
+<div class="center">
+	<div class="w3-content w3-section">
+
+	  <img class="mySlides w3-animate-fading" src="imgs/bjj.jpg" style="width:100%">
+	  <img class="mySlides w3-animate-fading" src="imgs/chen.jpg" style="width:100%">
+	  <img class="mySlides w3-animate-fading" src="imgs/mma.jpg" style="width:100%">
+	  <img class="mySlides w3-animate-fading" src="imgs/gojuryukarate.jpg" style="width:100%">
+	  <p class="redlink"><a href="file:///C:/Users/g/Desktop/projectmap/product/AccountDemo.html">Link to Account App</a></p>
+	 
+	</div>
+</div>
+<script>
+var myIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";  
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}    
+    x[myIndex-1].style.display = "block";  
+    setTimeout(carousel, 9000);    
+}
+</script>
+
+	<div class="container-fluid mt-2">
+		<div class="row">
+				<div class="col-12 col-md-6">
+					<div class="input-group">
+					<span class="input-group-btn">
+						<button class="btn btn-secondary" type="button">Find</button>
+					</span>
+					<input type="search" class="form-control"
+							data-bind="textInput: searchSection, valueUpdate: 'afterkeydown'"
+							id="searchSection"
+							name="searchSection"
+							placeholder="Search for martial art school"
+							aria-label="Search for martial art school">
+					</div>
+					<ul id="list" class="list-group" data-bind="foreach: gymLocations">
+
+						<li class="list-group-item" data-bind="text: title, visible: visibility, click: eventClickWindow">
+								<a href="#"></a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-12 col-md-6">
+					<div id="map"></div>
+				</div>
+			    <div id="hideWiki" class="col-12 mt-3" data-bind="css: {  'd-none': hideGym}">
+			        <div class="card alert alert-info">
+			          <div class="card-body">
+			            <h2 class="card-title" id="gymTitle" data-bind="text: wiki_info"></h2>
+			              <section id="funs" data-bind="foreach: details">
+			                <div data-bind="html: $data"></div>
+			              </section>
+
+			          </div>
+			        </div>
+
+			    </div>
+</div>
+
+    <script>
+          //This is model object
+          function Account(id, name, balance)
+          {
+            this.Id = id;
+            this.Name = name;
+            this.Balance = balance;
+          }
+
+          // this is View Model
+          function AccountViewModel(acc)
+          {
+            this.Id = acc.id;
+            this.Name = acc.name;
+            this.Balance = ko.observable(acc.Balance);
+          }
+
+          var acc = new Account(1, "A1", 10000);
+          var accViewModel = new AccountViewModel(acc);
+          ko.applyBindings(accViewModel);
+
+          
+      </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-debug.js"></script>
+<script src="./js/neighborhoodjs.js"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALFqt8e2sZQoXr0Tu3SQI2ZXLBgdYRDWY&callback=initMap" onerror="MapError()"></script>
+
+</body>
+</html>
